@@ -6,3 +6,8 @@ rent.php - form where you make a reservation
 make_reservation.php - if the reservation is successful the ajax data is sent here and the SQL inserts are done
 reserved.html - form where you select different filters
 reservations.php - these filters are send with POST here and the result is shown in table
+
+
+## Installation
+
+Start a php server in the folder
