@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Rent a Car</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+      function insertDB() {
+        $('#replyModal').modal('hide');
+
+
+        var brand = $( "#brand option:selected" ).text();
+        var year = $( "#year option:selected" ).text();
+        var engine = $( "#engine option:selected" ).text();
+        var transmission = $( "#transmission option:selected" ).text();
+
+        if ($('#gps').is(":checked")){
+          var gps = 'yes';
+        }
+        else var gps = 'no';
+        if ($('#parctronic').is(":checked")){
+          var parctronic = 'yes';
+        }
+        else var parctronic = 'no';
+        if ($('#tv').is(":checked")){
+          var tv = 'yes';
+        }
+        else var tv = 'no';
+
+        var doors = $('input[name="doors"]:checked').val();
+
+        $.ajax({
+          method: "POST",
+          url: "/insert_car.php",
+          data: {brand:brand, year:year, engine:engine,
+            transmission:transmission, gps:gps, parctronic:parctronic,
+            tv:tv, doors:doors
+          },
+          error:function() {
+            alert('There was a problem with the insert of the car. Please try later.');
+          }
+        })
+        .done(function( status ) {
+          alert(status);
+        });
+
+
+      }
+    </script>
+
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="add_car.html">Add Car</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="prices.html">Prices</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="rent.php">Rent Car</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="reserved.html">Reservations</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h3>Chose car</h3>
+  		  <div class="form-group">
+  		    <label for="exampleSelect1">Brand</label>
+  		    <select class="form-control" id="brand">
+  		      <option value="" disabled selected>Select a Brand</option>
+  		      <option value="Toyota">Toyota</option>
+  		      <option value="Hyundai">Hyundai</option>
+  		      <option value="Ford">Ford</option>
+  		      <option value="Kia">Kia</option>
+  		      <option value="VW">VW</option>
+  		      <option value="Mercedes">Mercedes</option>
+  		      <option value="Audi">Audi</option>
+  		      <option value="BMW">BMW</option>
+  		    </select>
+  		  </div>
+  		  <div class="form-group">
+  		    <label for="exampleSelect1">Year of production</label>
+  		    <select class="form-control" id="year">
+  		      <option value="" disabled selected>Select a Year</option>
+  		      <option value="2013">2013</option>
+  		      <option value="2014">2014</option>
+  		      <option value="2015">2015</option>
+  		      <option value="2016">2016</option>
+  		      <option value="2017">2017</option>
+  		    </select>
+  		  </div>
+  		  <div class="form-group">
+  		    <label for="exampleSelect1">Engine Type</label>
+  		    <select class="form-control" id="engine">
+  		      <option value="" disabled selected>Select an Engine</option>
+  		      <option value="Gas">Gas</option>
+  		      <option value="Diesel">Diesel</option>
+  		      <option value="Electric">Electric</option>
+  		      <option value="Hybrid">Hybrid</option>
+  		    </select>
+  		  </div>
+  		  <div class="form-group">
+  		    <label for="exampleSelect1">Transmission Type</label>
+  		    <select class="form-control" id="transmission">
+  		      <option value="" disabled selected>Select a Transmission</option>
+  		      <option value="Manual">Manual</option>
+  		      <option value="Automatic">Automatic</option>
+  		      <option value="Semi-Automatic">Semi-Automatic</option>
+  		    </select>
+  		  </div>
+  		  <fieldset class="form-group">
+  		    <legend>Number of doors</legend>
+  		    <label class="form-check-label">
+  		    <input type="radio" class="form-check-input" name="doors" id="radio1" value="2" checked>
+  		      2(3) doors
+  		    </label>
+  		    <label class="form-check-label">
+  		    <input type="radio" class="form-check-input" name="doors" id="radio2" value="4">
+  		      4(5) doors
+  		    </label>
+  		  </fieldset>
+  		  <div class="form-check">
+  		    <label class="form-check-label">
+  		      <input type="checkbox" id="gps" class="form-check-input">
+  		      GPS
+  		    </label>
+  		    <label class="form-check-label">
+  		      <input type="checkbox" id="parctronic" class="form-check-input">
+  		      Parctronic
+  		    </label>
+  		    <label class="form-check-label">
+  		      <input type="checkbox" id="tv" class="form-check-input">
+  		      TV
+  		    </label>
+  		  </div>
+  		  <button type="button" class="btn btn-primary" onclick="insertDB()">Submit</button>
+      </div>
+    </div>
+
+    <div class="container">
+      <hr>
+      <footer>
+        <p>&copy; Rent a Car 2017</p>
+      </footer>
+    </div> <!-- /container -->
+
+  </body>
+</html>
